@@ -1,0 +1,222 @@
+unit Model.Abastecimento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
+  Vcl.DBCtrls, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Datasnap.DBClient, DataModule, System.StrUtils;
+
+type
+  IAbastecimento = interface
+    ['{1C7029F9-E00F-4BB4-8E43-7A4AE477F59A}']
+    function BombaId(const AValue: Integer): IAbastecimento; overload;
+    function BombaId: Integer; overload;
+    function QtdLitros(const AValue: Double): IAbastecimento; overload;
+    function QtdLitros: Double; overload;
+    function ValorTotal(const AValue: Double): IAbastecimento; overload;
+    function ValorTotal: Double; overload;
+    function ValorImposto(const AValue: Double): IAbastecimento; overload;
+    function ValorImposto: Double; overload;
+    function Criar: IAbastecimento;
+    function GerarRelatorio(const ATipoCombustivel: String;
+      const ADataIni, ADataFim: TDate): TClientDataSet;
+    function CalcularImposto(const AValor, APercImposto: Double): Double;
+    function CalcularQtdLitros(const AValor, PrecoLitro: Double): Double;
+  end;
+
+type
+  TAbastecimento = class(TInterfacedObject, IAbastecimento)
+    private
+      FBombaId: Integer;
+      FQtdLitros: Double;
+      FValorTotal: Double;
+      FValorImposto: Double;
+      constructor Create;
+    public
+      destructor Destroy; override;
+      class function New: IAbastecimento;
+      function BombaId(const AValue: Integer): IAbastecimento; overload;
+      function BombaId: Integer; overload;
+      function QtdLitros(const AValue: Double): IAbastecimento; overload;
+      function QtdLitros: Double; overload;
+      function ValorTotal(const AValue: Double): IAbastecimento; overload;
+      function ValorTotal: Double; overload;
+      function ValorImposto(const AValue: Double): IAbastecimento; overload;
+      function ValorImposto: Double; overload;
+      function Criar: IAbastecimento;
+      function GerarRelatorio(const ATipoCombustivel: String;
+        const ADataIni, ADataFim: TDate): TClientDataSet;
+      function CalcularImposto(const AValor, APercImposto: Double): Double;
+  end;
+
+implementation
+
+{ TAbastecimento }
+
+function TAbastecimento.BombaId(const AValue: Integer): IAbastecimento;
+begin
+  Result := Self;
+  FBombaId := AValue;
+end;
+
+function TAbastecimento.BombaId: Integer;
+begin
+  Result := FBombaId;
+end;
+
+constructor TAbastecimento.Create;
+begin
+
+end;
+
+function TAbastecimento.Criar: IAbastecimento;
+begin
+  var LSql := Concat(
+    'insert into abastecimento ( ',
+      'bomba_id, ',
+      'data, ',
+      'qtd_litros, ',
+      'valor_total, ',
+      'valor_imposto ',
+    ') values ( ',
+      ':bomba, ',
+      'current_date, ',
+      ':qtd_litros, ',
+      ':valor_total, ',
+      ':valor_imposto ',
+    ')'
+  );
+
+  var Qry := TFDQuery.Create(nil);
+  Qry.Connection := dm.Connection;
+  try
+    with Qry do begin
+      SQL.Clear;
+      SQL.Add(LSql);
+      ParamByName('bomba').AsInteger := FBombaId;
+      ParamByName('qtd_litros').AsFloat := FQtdLitros;
+      ParamByName('valor_total').AsFloat := FValorTotal;
+      ParamByName('valor_imposto').AsFloat := FValorImposto;
+      ExecSQL;
+    end;
+  finally
+    Qry.Free;
+  end;
+end;
+
+destructor TAbastecimento.Destroy;
+begin
+
+  inherited;
+end;
+
+function TAbastecimento.CalcularImposto(const AValor,
+  APercImposto: Double): Double;
+begin
+  Result := AValor * (APercImposto / 100);
+end;
+
+function TAbastecimento.GerarRelatorio(const ATipoCombustivel: String;
+  const ADataIni, ADataFim: TDate): TClientDataSet;
+begin
+  var LSql := Concat(
+    'select a.data, ',
+           't.descricao as tanque, ',
+           'b.descricao as bomba, ',
+           't.preco_litro, ',
+           'a.qtd_litros, ',
+           'a.valor_total as total, ',
+           'a.valor_imposto as imposto ',
+      'from abastecimento a inner join bomba b on b.id = a.bomba_id ',
+                           'inner join tanque t on t.id = b.tanque_id ',
+     'where a.data between :dtini and :dtfim ',
+     ATipoCombustivel,
+    'order by ',
+      'a.data, ',
+      't.tipo_combustivel '
+  );
+
+  var LQry := TFDQuery.Create(nil);
+  LQry.Connection := dm.Connection;
+  try
+    LQry.SQL.Clear;
+    LQry.SQL.Add(LSql);
+    LQry.ParamByName('dtini').AsDate := ADataIni;
+    LQry.ParamByName('dtfim').AsDate := ADataFim;
+    LQry.Open;
+
+    Result := TClientDataSet.Create(nil);
+    with Result do begin
+      FieldDefs.Add('data', ftDate);
+      FieldDefs.Add('tanque', ftString, 50);
+      FieldDefs.Add('bomba', ftString, 50);
+      FieldDefs.Add('preco_litro', ftFloat);
+      FieldDefs.Add('qtd_litros', ftFloat);
+      FieldDefs.Add('total', ftFloat);
+      FieldDefs.Add('imposto', ftFloat);
+
+      CreateDataSet;
+
+      LQry.First;
+      while not LQry.Eof do begin
+        Append;
+        FieldByName('data').AsDateTime := LQry.FieldByName('data').AsDateTime;
+        FieldByName('tanque').AsString := LQry.FieldByName('tanque').AsString;
+        FieldByName('bomba').AsString := LQry.FieldByName('bomba').AsString;
+        FieldByName('preco_litro').AsFloat := LQry.FieldByName('preco_litro').AsFloat;
+        FieldByName('qtd_litros').AsFloat := LQry.FieldByName('qtd_litros').AsFloat;
+        FieldByName('total').AsFloat := LQry.FieldByName('total').AsFloat;
+        FieldByName('imposto').AsFloat := LQry.FieldByName('imposto').AsFloat;
+        Post;
+
+        LQry.Next;
+      end;
+    end;
+  finally
+    LQry.Free;
+  end;
+end;
+
+class function TAbastecimento.New: IAbastecimento;
+begin
+  Result := Self.Create;
+end;
+
+function TAbastecimento.QtdLitros(const AValue: Double): IAbastecimento;
+begin
+  Result := Self;
+  FQtdLitros := AValue;
+end;
+
+function TAbastecimento.QtdLitros: Double;
+begin
+  Result := FQtdLitros;
+end;
+
+function TAbastecimento.ValorImposto(const AValue: Double): IAbastecimento;
+begin
+  Result := Self;
+  FValorImposto := AValue;
+end;
+
+function TAbastecimento.ValorImposto: Double;
+begin
+  Result := FValorImposto;
+end;
+
+function TAbastecimento.ValorTotal(const AValue: Double): IAbastecimento;
+begin
+  Result := Self;
+  FValorTotal := AValue;
+end;
+
+function TAbastecimento.ValorTotal: Double;
+begin
+  Result := FValorTotal;
+end;
+
+end.

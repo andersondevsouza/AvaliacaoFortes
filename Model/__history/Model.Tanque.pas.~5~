@@ -1,0 +1,101 @@
+unit Model.Tanque;
+
+interface
+
+Uses
+  Interfaces;
+
+type
+  TModelTanque = class(TInterfacedObject, ITanque)
+    private
+      FDescricao: String;
+      FTipoCombustivel: String;
+      FValorLitro: String;
+      constructor Create;
+    public
+      destructor Destroy; override;
+      class function New: ITanque;
+      function Descricao(const AValue: String): ITanque; overload;
+      function Descricao: String; overload;
+      function TipoCombustivel(const AValue: String): ITanque; overload;
+      function TipoCombustivel: String; overload;
+      function ValorLitro(const AValue: Double): ITanque; overload;
+      function ValorLitro: Double; overload;
+      procedure Create;
+      procedure Update;
+      procedure Delete;
+      procedure List;
+  end;
+
+implementation
+
+{ TModelTanque }
+
+function TModelTanque.Descricao(const AValue: String): ITanque;
+begin
+
+end;
+
+constructor TModelTanque.Create;
+begin
+
+end;
+
+function TModelTanque.Descricao: String;
+begin
+
+end;
+
+destructor TModelTanque.Destroy;
+begin
+
+  inherited;
+end;
+
+class function TModelTanque.New: ITanque;
+begin
+
+end;
+
+function TModelTanque.TipoCombustivel: String;
+begin
+
+end;
+
+function TModelTanque.ValorLitro(const AValue: Double): ITanque;
+begin
+
+end;
+
+function TModelTanque.ValorLitro: Double;
+begin
+
+end;
+
+function TModelTanque.TipoCombustivel(const AValue: String): ITanque;
+begin
+
+end;
+
+procedure TModelTanque.Create;
+begin
+
+end;
+
+procedure TModelTanque.Update;
+begin
+
+end;
+
+procedure TModelTanque.Delete;
+begin
+
+end;
+
+procedure TModelTanque.List;
+begin
+
+end;
+
+
+end.

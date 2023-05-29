@@ -1,0 +1,23 @@
+unit Model.Interfaces;
+
+interface
+
+uses
+  FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.SQLite,
+  FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
+  FireDAC.Phys.SQLiteWrapper.Stat, FireDAC.VCLUI.Wait, Data.DB,
+  FireDAC.Comp.Client;
+
+type
+  IDBConnection = interface
+    ['{44D80F38-9D93-46D9-9D77-E9F7FBA64ACA}']
+    function DataBasePath(const AValue: String): IDBConnection; overload;
+    function DataBasePath: String; overload;
+    function Connect: Boolean;
+  end;
+
+implementation
+
+end.

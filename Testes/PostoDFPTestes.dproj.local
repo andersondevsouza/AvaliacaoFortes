@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2023/03/07 10:15:17.000.016,=C:\Users\ander\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/05/28 17:15:51.832,=C:\Users\ander\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/05/28 17:19:34.119,=E:\Projetos\AvaliacaoFortes\Model\Model.Bombas.pas</Transaction>
+    <Transaction>2023/05/28 17:20:22.616,E:\Projetos\AvaliacaoFortes\Testes\Model.Bombas.Test.pas=C:\Users\ander\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/05/28 17:20:45.377,E:\Projetos\AvaliacaoFortes\Testes\PostoDFPTestes.dproj=C:\Users\ander\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2023/05/28 17:30:27.011,=E:\Projetos\AvaliacaoFortes\Testes\Unit1.pas</Transaction>
+    <Transaction>2023/05/28 17:31:45.667,E:\Projetos\AvaliacaoFortes\Testes\untAbastecimentoTeste.pas=E:\Projetos\AvaliacaoFortes\Testes\Unit1.pas</Transaction>
+    <Transaction>2023/05/28 17:39:28.447,=E:\Projetos\AvaliacaoFortes\Model\Model.Abastecimento.pas</Transaction>
+    <Transaction>2023/05/28 17:41:32.008,E:\Projetos\AvaliacaoFortes\Model\Model.Bombas.pas=</Transaction>
+    <Transaction>2023/05/28 17:41:37.142,E:\Projetos\AvaliacaoFortes\Model\Model.Abastecimento.pas=</Transaction>
+    <Transaction>2023/05/28 17:41:52.756,E:\Projetos\AvaliacaoFortes\Testes\Model.Bombas.Test.pas=</Transaction>
+    <Transaction>2023/05/28 17:42:58.341,=E:\Projetos\AvaliacaoFortes\View\View.Abastecimento.pas</Transaction>
+    <Transaction>2023/05/28 18:04:11.299,=E:\Projetos\AvaliacaoFortes\View\View.Main.pas</Transaction>
+    <Transaction>2023/05/28 18:04:23.829,E:\Projetos\AvaliacaoFortes\View\View.Main.pas=</Transaction>
+    <Transaction>2023/05/28 18:05:34.556,=E:\Projetos\AvaliacaoFortes\Model\Model.Abastecimento.pas</Transaction>
+    <Transaction>2023/05/28 18:05:34.589,=E:\Projetos\AvaliacaoFortes\Model\Model.Bombas.pas</Transaction>
+    <Transaction>2023/05/28 18:05:49.715,=E:\Projetos\AvaliacaoFortes\DataBase\DataModule.pas</Transaction>
+    <Transaction>2023/05/28 18:08:08.541,E:\Projetos\AvaliacaoFortes\View\View.Abastecimento.pas=</Transaction>
+    <Transaction>2023/05/28 18:08:14.568,E:\Projetos\AvaliacaoFortes\Model\Model.Bombas.pas=</Transaction>
+  </Transactions>
+</BorlandProject>

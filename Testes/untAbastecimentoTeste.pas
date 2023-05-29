@@ -1,0 +1,83 @@
+unit untAbastecimentoTeste;
+
+interface
+
+uses
+  DUnitX.TestFramework, Model.Abastecimento;
+
+type
+  [TestFixture]
+  TMyTestObject = class
+  private
+    FAbastecimento: IAbastecimento;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    // Sample Methods
+    // Simple single Test
+    [Test]
+    [TestCase('Normal', '10, 20, 2')]
+    [TestCase('Fracionado', '50.50, 10, 5.05')]
+    procedure TestDoCalcularImposto(const AValor, APercImposto,
+      AValorEsperado: Double);
+    [Test]
+    [TestCase('Normal', '10, 2, 20')]
+    [TestCase('Fracionado', '10.5, 2.5, 26.25')]
+    procedure TestDoCalcularTotal(const AQtd, APrecoLitro,
+      AValorEsperado: Double);
+    [Test]
+    [TestCase('Normal', '20, 10, 2')]
+    [TestCase('Fracionado', '20.50, 2.5, 8.2')]
+    procedure TestDoCalcularQtd(const AValor, APrecoLitro,
+      AValorEsperado: Double);
+    [Test]
+    procedure TestCalcularQtdDivisaoPorZero;
+  end;
+
+implementation
+
+procedure TMyTestObject.Setup;
+begin
+  FAbastecimento := TAbastecimento.New;
+end;
+
+procedure TMyTestObject.TearDown;
+begin
+end;
+
+procedure TMyTestObject.TestCalcularQtdDivisaoPorZero;
+begin
+  Assert.WillRaise(
+    procedure begin
+      FAbastecimento.CalcularQtdLitros(50, 0);
+    end
+  )
+end;
+
+procedure TMyTestObject.TestDoCalcularImposto(const AValor, APercImposto,
+  AValorEsperado: Double);
+begin
+  var LResultado := FAbastecimento.CalcularImposto(AValor, APercImposto);
+  Assert.AreEqual<Currency>(AValorEsperado, LResultado, 'TotalImposto');
+end;
+
+procedure TMyTestObject.TestDoCalcularQtd(const AValor, APrecoLitro,
+  AValorEsperado: Double);
+begin
+  var LResultado := FAbastecimento.CalcularQtdLitros(AValor, APrecoLitro);
+  Assert.AreEqual<Currency>(AValorEsperado, LResultado, 'TotalQtdLitros');
+end;
+
+procedure TMyTestObject.TestDoCalcularTotal(const AQtd, APrecoLitro,
+  AValorEsperado: Double);
+begin
+  var LResultado := FAbastecimento.CalcularValorTotal(AQtd, APrecoLitro);
+  Assert.AreEqual<Currency>(AValorEsperado, LResultado, 'Total');
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TMyTestObject);
+
+end.

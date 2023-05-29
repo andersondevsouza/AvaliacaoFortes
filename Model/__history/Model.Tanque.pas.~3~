@@ -1,0 +1,57 @@
+unit Model.Tanque;
+
+interface
+
+Uses
+  Interfaces;
+
+type
+  TModelTanque = class(TInterfacedObject, ITanque)
+    private
+      FDescricao: String;
+      FTipoCombustivel: String;
+      FValorLitro: Double;
+    public
+      function Descricao(const AValue: String): ITanque; overload;
+      function Descricao: String; overload;
+      function TipoCombustivel(const AValue: String): ITanque; overload;
+      function TipoCombustivel: String; overload;
+      function ValorLitro(const AValue: Double): ITanque; overload;
+      function ValorLitro: Double; overload;
+  end;
+
+implementation
+
+{ TModelTanque }
+
+function TModelTanque.Descricao(const AValue: String): ITanque;
+begin
+
+end;
+
+function TModelTanque.Descricao: String;
+begin
+
+end;
+
+function TModelTanque.TipoCombustivel(const AValue: String): ITanque;
+begin
+
+end;
+
+function TModelTanque.TipoCombustivel: String;
+begin
+
+end;
+
+function TModelTanque.ValorLitro: Double;
+begin
+
+end;
+
+function TModelTanque.ValorLitro(const AValue: Double): ITanque;
+begin
+
+end;
+
+end.

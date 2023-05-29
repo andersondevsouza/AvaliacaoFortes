@@ -1,0 +1,15 @@
+unit Model.Interfaces;
+
+interface
+
+type
+  IDBConnection = interface
+    ['{44D80F38-9D93-46D9-9D77-E9F7FBA64ACA}']
+    function DataBasePath(const AValue: String): IDBConnection; overload;
+    function DataBasePath: String; overload;
+    function Connect: Boolean;
+  end;
+
+implementation
+
+end.

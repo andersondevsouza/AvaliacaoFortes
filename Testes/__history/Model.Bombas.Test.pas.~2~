@@ -1,0 +1,33 @@
+unit Model.Bombas.Test;
+
+interface
+
+uses
+  DUnitX.TestFramework, Model.Bombas;
+
+type
+  [TestFixture]
+  TMyTestObject = class
+  private
+    FBomba: TBomba;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+  end;
+
+implementation
+
+procedure TMyTestObject.Setup;
+begin
+end;
+
+procedure TMyTestObject.TearDown;
+begin
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TMyTestObject);
+
+end.

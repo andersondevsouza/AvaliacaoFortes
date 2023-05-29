@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{D80E082D-6EDC-43FE-97C7-41AACAE4BB9E}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Testes\PostoDFPTestes.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="PostoDFP.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="PostoDFPTestes">
+        <MSBuild Projects="Testes\PostoDFPTestes.dproj"/>
+    </Target>
+    <Target Name="PostoDFPTestes:Clean">
+        <MSBuild Projects="Testes\PostoDFPTestes.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PostoDFPTestes:Make">
+        <MSBuild Projects="Testes\PostoDFPTestes.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PostoDFP">
+        <MSBuild Projects="PostoDFP.dproj"/>
+    </Target>
+    <Target Name="PostoDFP:Clean">
+        <MSBuild Projects="PostoDFP.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PostoDFP:Make">
+        <MSBuild Projects="PostoDFP.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="PostoDFPTestes;PostoDFP"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="PostoDFPTestes:Clean;PostoDFP:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="PostoDFPTestes:Make;PostoDFP:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

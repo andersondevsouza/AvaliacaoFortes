@@ -1,0 +1,71 @@
+unit Model.DBConnection;
+
+interface
+
+uses
+  FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.SQLite,
+  FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
+  FireDAC.Phys.SQLiteWrapper.Stat, FireDAC.VCLUI.Wait, Data.DB,
+  FireDAC.Comp.Client,
+
+  Model.Interfaces;
+
+type
+  TDBConnection = class(TInterfacedObject, IDBConnection)
+    private
+      FDataBasePath: String;
+      constructor Create;
+    public
+      destructor Destroy; override;
+      class function New: IDBConnection;
+      function DataBasePath(const AValue: String): IDBConnection; overload;
+      function DataBasePath: String; overload;
+      function Connect: TFDConnection;
+  end;
+
+implementation
+
+
+
+{ TDBConnection }
+
+function TDBConnection.Connect: TFDConnection;
+begin
+  Result := TFDConnection.Create(nil);
+  Result.Params.Clear;
+  Result.DriverName := 'SQLite';
+  Result.Params.Add('Database=:memory:'); // Use o banco de dados em memória
+  Result.Params.Add('LockingMode=Normal');
+  Result.Connected := True;
+end;
+
+constructor TDBConnection.Create;
+begin
+
+end;
+
+function TDBConnection.DataBasePath: String;
+begin
+  Result := FDataBasePath;
+end;
+
+function TDBConnection.DataBasePath(const AValue: String): IDBConnection;
+begin
+  Result := Self;
+  FDataBasePath := AValue;
+end;
+
+destructor TDBConnection.Destroy;
+begin
+
+  inherited;
+end;
+
+class function TDBConnection.New: IDBConnection;
+begin
+  Result := Self.Create;
+end;
+
+end.

@@ -1,0 +1,118 @@
+unit Model.Tanque;
+
+interface
+
+Uses
+  Interfaces;
+
+type
+  TModelTanque = class(TInterfacedObject, ITanque)
+    private
+      FId: Integer;
+      FDescricao: String;
+      FTipoCombustivel: String;
+      FValorLitro: String;
+      constructor Create;
+    public
+      destructor Destroy; override;
+      class function New: ITanque;
+      function Id(const AValue: Integer): ITanque; overload;
+      function Id: Integer; overload;
+      function Descricao(const AValue: String): ITanque; overload;
+      function Descricao: String; overload;
+      function TipoCombustivel(const AValue: String): ITanque; overload;
+      function TipoCombustivel: String; overload;
+      function ValorLitro(const AValue: Double): ITanque; overload;
+      function ValorLitro: Double; overload;
+      procedure Criar;
+      procedure Atualizar;
+      procedure Deletar;
+      procedure Listar;
+  end;
+
+implementation
+
+{ TModelTanque }
+
+constructor TModelTanque.Create;
+begin
+
+end;
+
+destructor TModelTanque.Destroy;
+begin
+
+  inherited;
+end;
+
+function TModelTanque.Descricao(const AValue: String): ITanque;
+begin
+  Result := Self;
+  FDescricao := AValue;
+end;
+
+function TModelTanque.Descricao: String;
+begin
+  Result := FDescricao;
+end;
+
+function TModelTanque.Id: Integer;
+begin
+  Result := FId;
+end;
+
+function TModelTanque.Id(const AValue: Integer): ITanque;
+begin
+  Result := Self;
+  FId := AValue;
+end;
+
+class function TModelTanque.New: ITanque;
+begin
+  Result := Self.Create;
+end;
+
+function TModelTanque.ValorLitro(const AValue: Double): ITanque;
+begin
+  Result := Self;
+  FValorLitro := AValue;
+end;
+
+function TModelTanque.ValorLitro: Double;
+begin
+  Result := FValorLitro;
+end;
+
+function TModelTanque.TipoCombustivel(const AValue: String): ITanque;
+begin
+  Result := Self;
+  FTipoCombustivel := AValue;
+end;
+
+function TModelTanque.TipoCombustivel: String;
+begin
+  Result := FTipoCombustivel;
+end;
+
+procedure TModelTanque.Criar;
+begin
+
+end;
+
+procedure TModelTanque.Atualizar;
+begin
+
+end;
+
+procedure TModelTanque.Deletar;
+begin
+
+end;
+
+procedure TModelTanque.Listar;
+begin
+
+end;
+
+
+end.
